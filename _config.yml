@@ -1,0 +1,28 @@
+# Site settings
+title: Xiaodong Cao
+description: 'There exists style and taste in programming.'
+url: 'http://xiaodongcao.com'
+baseurl: '/'
+# google_analytics: 'UA-XXXXXX-X'
+
+author:
+  name: 'xiaodong cao'
+  email: caoxiaodong007@gmail.com
+  twitter_username:
+  github_username:  DVegaCapital
+  linkedin_username:
+
+# Build settings
+destination: _site
+paginate: 5
+permalink: /:year/:title/
+markdown: kramdown
+highlighter: pygments
+
+kramdown:
+  # use Github Flavored Markdown
+  input: GFM
+  # do not replace newlines by <br>s
+  hard_wrap: false
+
+exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']

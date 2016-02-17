@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Discover Webpack workflow (with express)</title>
+  <meta name="description" content="There exists style and taste in programming.">
+  <meta name="author" content="xiaodong cao">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Xiaodong Cao">
+  <meta name="twitter:description" content="There exists style and taste in programming.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Xiaodong Cao">
+  <meta property="og:description" content="There exists style and taste in programming.">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://xiaodongcao.com//2016/Discover-Webpack/">
+<!--  <link rel="alternate" type="application/rss+xml" title="Xiaodong Cao" href="/feed.xml">-->
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+  
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <a href="/" title="link to home of Xiaodong Cao">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Xiaodong Cao</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">There exists style and taste in programming.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume.html" title="link to Xiaodong Cao resume" class="resume-button">Resume</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="link to Xiaodong Cao blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+            
+
+            
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/DVegaCapital" title="DVegaCapital on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+            
+
+            
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:caoxiaodong007@gmail.com" title="Email caoxiaodong007@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+            
+
+          
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="29 Jan 2016" class="post-meta__date date">29 Jan 2016</time> &#8226; <span class="post-meta__tags">on <a href="/tags/#Web Development">Web Development</a> </span>
+    </div>
+    <h1 class="post-title">Discover Webpack workflow (with express)</h1>
+  </header>
+
+  <section class="post">
+    <p>Webpack now becomes the most populated words in front end community. we can combine webpack with gulp
+to a powerful front end project framework. so let us start from scratch to see how to setup the workflow</p>
+
+<h2 id="project-configuration-file">Project configuration file</h2>
+
+<p>here we use package.json as our deployment and project configuration file. 
+To help us automate some processes, we filled the scripts with most used command:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
+    <span class="o">...</span>
+    <span class="s">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;start&quot;</span><span class="p">:</span> <span class="s">&quot;./node_modules/.bin/babel-node server&quot;</span><span class="p">,</span> 
+        <span class="s">&quot;build&quot;</span><span class="p">:</span> <span class="s">&quot;rimraf dist &amp;&amp; set NODE_ENV=production &amp;&amp; webpack --config ./webpack.production.config.js --progress --profile --colors&quot;</span><span class="p">,</span>
+        <span class="s">&quot;test&quot;</span><span class="p">:</span> <span class="o">...</span>
+     <span class="p">},</span> 
+     <span class="o">...</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="express-server">Express server</h2>
+
+<p>Express is great framework to handle the requests from the browser if you want to use Node server as
+development tool.</p>
+
+<p><em>server.js</em></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">var</span> <span class="n">express</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&#39;express&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">path</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">);</span>
+
+<span class="n">var</span> <span class="n">app</span> <span class="o">=</span> <span class="n">express</span><span class="p">();</span>
+
+<span class="n">var</span> <span class="n">isProduction</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">NODE_ENV</span> <span class="o">===</span> <span class="s">&#39;production&#39;</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">port</span> <span class="o">=</span> <span class="n">isProduction</span> <span class="err">?</span> <span class="n">process</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">PORT</span> <span class="p">:</span> <span class="mi">3000</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">publicPath</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">__dirname</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">We</span> <span class="n">point</span> <span class="n">to</span> <span class="n">our</span> <span class="n">static</span> <span class="n">assets</span>
+<span class="n">app</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">express</span><span class="o">.</span><span class="n">static</span><span class="p">(</span><span class="n">publicPath</span><span class="p">));</span>
+
+<span class="o">//</span> <span class="n">And</span> <span class="n">run</span> <span class="n">the</span> <span class="n">server</span>
+<span class="n">app</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&#39;Server running on port &#39;</span> <span class="o">+</span> <span class="n">port</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="workflow">Workflow</h2>
+
+<p>Let us first configure a webpack for our development workflow:</p>
+
+<p><em>webpack.config.js</em></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">var</span> <span class="n">Webpack</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&#39;webpack&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">path</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">nodeModulesPath</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">__dirname</span><span class="p">,</span> <span class="s">&#39;node_modules&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">buildPath</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">__dirname</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">,</span> <span class="s">&#39;build&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">mainPath</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">__dirname</span><span class="p">,</span> <span class="s">&#39;app&#39;</span><span class="p">,</span> <span class="s">&#39;main.js&#39;</span><span class="p">);</span>
+
+<span class="n">var</span> <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+
+  <span class="o">//</span> <span class="n">Makes</span> <span class="n">sure</span> <span class="n">errors</span> <span class="ow">in</span> <span class="n">console</span> <span class="nb">map</span> <span class="n">to</span> <span class="n">the</span> <span class="n">correct</span> <span class="nb">file</span>
+  <span class="o">//</span> <span class="ow">and</span> <span class="n">line</span> <span class="n">number</span>
+  <span class="n">devtool</span><span class="p">:</span> <span class="s">&#39;eval&#39;</span><span class="p">,</span>
+  <span class="n">entry</span><span class="p">:</span> <span class="p">[</span>
+
+    <span class="o">//</span> <span class="n">For</span> <span class="n">hot</span> <span class="n">style</span> <span class="n">updates</span>
+    <span class="s">&#39;webpack/hot/dev-server&#39;</span><span class="p">,</span>
+
+    <span class="o">//</span> <span class="n">The</span> <span class="n">script</span> <span class="n">refreshing</span> <span class="n">the</span> <span class="n">browser</span> <span class="n">on</span> <span class="n">none</span> <span class="n">hot</span> <span class="n">updates</span>
+    <span class="s">&#39;webpack-dev-server/client?http://localhost:8080&#39;</span><span class="p">,</span>
+
+    <span class="o">//</span> <span class="n">Our</span> <span class="n">application</span>
+    <span class="n">mainPath</span><span class="p">],</span>
+  <span class="n">output</span><span class="p">:</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">We</span> <span class="n">need</span> <span class="n">to</span> <span class="n">give</span> <span class="n">Webpack</span> <span class="n">a</span> <span class="n">path</span><span class="o">.</span> <span class="n">It</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">actually</span> <span class="n">need</span> <span class="n">it</span><span class="p">,</span>
+    <span class="o">//</span> <span class="n">because</span> <span class="n">files</span> <span class="n">are</span> <span class="n">kept</span> <span class="ow">in</span> <span class="n">memory</span> <span class="ow">in</span> <span class="n">webpack</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">server</span><span class="p">,</span> <span class="n">but</span> <span class="n">an</span>
+    <span class="o">//</span> <span class="n">error</span> <span class="n">will</span> <span class="n">occur</span> <span class="k">if</span> <span class="n">nothing</span> <span class="ow">is</span> <span class="n">specified</span><span class="o">.</span> <span class="n">We</span> <span class="n">use</span> <span class="n">the</span> <span class="n">buildPath</span>
+    <span class="o">//</span> <span class="k">as</span> <span class="n">that</span> <span class="n">points</span> <span class="n">to</span> <span class="n">where</span> <span class="n">the</span> <span class="n">files</span> <span class="n">will</span> <span class="n">eventually</span> <span class="n">be</span> <span class="n">bundled</span>
+    <span class="o">//</span> <span class="ow">in</span> <span class="n">production</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">buildPath</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="s">&#39;bundle.js&#39;</span><span class="p">,</span>
+
+    <span class="o">//</span> <span class="n">Everything</span> <span class="n">related</span> <span class="n">to</span> <span class="n">Webpack</span> <span class="n">should</span> <span class="n">go</span> <span class="n">through</span> <span class="n">a</span> <span class="n">build</span> <span class="n">path</span><span class="p">,</span>
+    <span class="o">//</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span><span class="n">build</span><span class="o">.</span> <span class="n">That</span> <span class="n">makes</span> <span class="n">proxying</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">handle</span>
+    <span class="n">publicPath</span><span class="p">:</span> <span class="s">&#39;/build/&#39;</span>
+  <span class="p">},</span>
+  <span class="n">module</span><span class="p">:</span> <span class="p">{</span>
+
+    <span class="n">loaders</span><span class="p">:</span> <span class="p">[</span>
+
+    <span class="o">//</span> <span class="n">I</span> <span class="n">highly</span> <span class="n">recommend</span> <span class="n">using</span> <span class="n">the</span> <span class="n">babel</span><span class="o">-</span><span class="n">loader</span> <span class="k">as</span> <span class="n">it</span> <span class="n">gives</span> <span class="n">you</span>
+    <span class="o">//</span> <span class="n">ES6</span><span class="o">/</span><span class="mi">7</span> <span class="n">syntax</span> <span class="ow">and</span> <span class="n">JSX</span> <span class="n">transpiling</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">box</span>
+    <span class="p">{</span>
+      <span class="n">test</span><span class="p">:</span> <span class="o">/</span>\<span class="o">.</span><span class="n">js</span><span class="err">$</span><span class="o">/</span><span class="p">,</span>
+      <span class="n">loader</span><span class="p">:</span> <span class="s">&#39;babel&#39;</span><span class="p">,</span>
+      <span class="n">exclude</span><span class="p">:</span> <span class="p">[</span><span class="n">nodeModulesPath</span><span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="o">//</span> <span class="n">Let</span> <span class="n">us</span> <span class="n">also</span> <span class="n">add</span> <span class="n">the</span> <span class="n">style</span><span class="o">-</span><span class="n">loader</span> <span class="ow">and</span> <span class="n">css</span><span class="o">-</span><span class="n">loader</span><span class="p">,</span> <span class="n">which</span> <span class="n">you</span> <span class="n">can</span>
+    <span class="o">//</span> <span class="n">expand</span> <span class="k">with</span> <span class="n">less</span><span class="o">-</span><span class="n">loader</span> <span class="n">etc</span><span class="o">.</span>
+    <span class="p">{</span>
+      <span class="n">test</span><span class="p">:</span> <span class="o">/</span>\<span class="o">.</span><span class="n">css</span><span class="err">$</span><span class="o">/</span><span class="p">,</span>
+      <span class="n">loader</span><span class="p">:</span> <span class="s">&#39;style!css&#39;</span>
+    <span class="p">}</span>
+
+    <span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="o">//</span> <span class="n">We</span> <span class="n">have</span> <span class="n">to</span> <span class="n">manually</span> <span class="n">add</span> <span class="n">the</span> <span class="n">Hot</span> <span class="n">Replacement</span> <span class="n">plugin</span> <span class="n">when</span> <span class="n">running</span>
+  <span class="o">//</span> <span class="kn">from</span> <span class="nn">Node</span>
+  <span class="n">plugins</span><span class="p">:</span> <span class="p">[</span><span class="n">new</span> <span class="n">Webpack</span><span class="o">.</span><span class="n">HotModuleReplacementPlugin</span><span class="p">()]</span>
+<span class="p">};</span>
+
+<span class="n">module</span><span class="o">.</span><span class="n">exports</span> <span class="o">=</span> <span class="n">config</span><span class="p">;</span></code></pre></div>
+
+  </section>
+</article>
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2016 xiaodong cao. All rights reserved.</span>
+</footer> 
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+    </div>
+  </body>
+</html>
