@@ -131,14 +131,35 @@
   </header>
 
   <section class="post">
-    <h4 id="the-problem-javascript-concurrency">The Problem: JavaScript Concurrency</h4>
+    <h2 id="the-problem-javascript-concurrency">The Problem: JavaScript Concurrency</h2>
 
-<p>There are a number of bottlenecks preventing interesting applications from being ported (say, from server-heavy 
-implementations) to client-side JavaScript. Some of these include browser compatibility, static typing, accessibility, 
-and performance. Fortunately, the latter is quickly becoming a thing of the past as browser vendors rapidly improve the 
-speed of their JavaScript engines.</p>
+<p>Today I learned something about multi-threading in Javascript — HTML5 Web Workers. I would like to see how to apply these
+for better web performance.</p>
 
-<p>—- to be continue</p>
+<p>At the old days Javascript does not support multi-threading because the javascript interpreter in the browser is a 
+single thread (AFAIK). Even Google Chrome will not let the web page’s Javascript run concurrently because this would 
+cause massive concurrency issues in existing web pages(like intermediate state viewed by different users). All 
+Chrome does is separate multiple components (different tabs, plugins, etc) into separate processes.</p>
+
+<p>But now days in HTML5 Web Workers provide a simple means for web content to run scripts in background threads. This is 
+real multi-threading situation. Non-blocking doesn’t mean concurrency, Asynchronous events are processed after the current
+executing script has yielded.</p>
+
+<h2 id="web-workers-api">Web Workers API</h2>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;task.js&#39;</span><span class="p">);</span></code></pre></div>
+
+<p>like other threading concept, Workers utilize thread-like message passing to achieve parallelism.</p>
+
+<p><code>postMessage()</code> we can start a worker by calling this method.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;task.js&#39;</span><span class="p">);</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Worker said: &#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span></code></pre></div>
 
   </section>
 </article>

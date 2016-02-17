@@ -5,20 +5,41 @@
     <description>There exists style and taste in programming.</description>
     <link>http://xiaodongcao.com//</link>
     <atom:link href="http://xiaodongcao.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 14 Feb 2016 11:05:09 -0500</pubDate>
-    <lastBuildDate>Sun, 14 Feb 2016 11:05:09 -0500</lastBuildDate>
+    <pubDate>Tue, 16 Feb 2016 23:39:44 -0500</pubDate>
+    <lastBuildDate>Tue, 16 Feb 2016 23:39:44 -0500</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
         <title>Javascript Concurrency : Web Workers</title>
-        <description>&lt;h4 id=&quot;the-problem-javascript-concurrency&quot;&gt;The Problem: JavaScript Concurrency&lt;/h4&gt;
+        <description>&lt;h2 id=&quot;the-problem-javascript-concurrency&quot;&gt;The Problem: JavaScript Concurrency&lt;/h2&gt;
 
-&lt;p&gt;There are a number of bottlenecks preventing interesting applications from being ported (say, from server-heavy 
-implementations) to client-side JavaScript. Some of these include browser compatibility, static typing, accessibility, 
-and performance. Fortunately, the latter is quickly becoming a thing of the past as browser vendors rapidly improve the 
-speed of their JavaScript engines.&lt;/p&gt;
+&lt;p&gt;Today I learned something about multi-threading in Javascript — HTML5 Web Workers. I would like to see how to apply these
+for better web performance.&lt;/p&gt;
 
-&lt;p&gt;—- to be continue&lt;/p&gt;
+&lt;p&gt;At the old days Javascript does not support multi-threading because the javascript interpreter in the browser is a 
+single thread (AFAIK). Even Google Chrome will not let the web page’s Javascript run concurrently because this would 
+cause massive concurrency issues in existing web pages(like intermediate state viewed by different users). All 
+Chrome does is separate multiple components (different tabs, plugins, etc) into separate processes.&lt;/p&gt;
+
+&lt;p&gt;But now days in HTML5 Web Workers provide a simple means for web content to run scripts in background threads. This is 
+real multi-threading situation. Non-blocking doesn’t mean concurrency, Asynchronous events are processed after the current
+executing script has yielded.&lt;/p&gt;
+
+&lt;h2 id=&quot;web-workers-api&quot;&gt;Web Workers API&lt;/h2&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;worker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Worker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;like other threading concept, Workers utilize thread-like message passing to achieve parallelism.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;postMessage()&lt;/code&gt; we can start a worker by calling this method.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;worker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Worker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;worker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Worker said: &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;worker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;hello world&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 13 Feb 2016 00:00:00 -0500</pubDate>
         <link>http://xiaodongcao.com//2016/Javascript-Concurrency-Web-Workers/</link>

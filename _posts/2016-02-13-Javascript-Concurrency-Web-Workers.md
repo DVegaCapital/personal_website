@@ -6,11 +6,37 @@ categories: front end development
 tags: [Web Development]
 ---
 
-#### The Problem: JavaScript Concurrency
+## The Problem: JavaScript Concurrency
 
-There are a number of bottlenecks preventing interesting applications from being ported (say, from server-heavy 
-implementations) to client-side JavaScript. Some of these include browser compatibility, static typing, accessibility, 
-and performance. Fortunately, the latter is quickly becoming a thing of the past as browser vendors rapidly improve the 
-speed of their JavaScript engines.
+Today I learned something about multi-threading in Javascript --- HTML5 Web Workers. I would like to see how to apply these
+for better web performance. 
 
----- to be continue
+At the old days Javascript does not support multi-threading because the javascript interpreter in the browser is a 
+single thread (AFAIK). Even Google Chrome will not let the web page's Javascript run concurrently because this would 
+cause massive concurrency issues in existing web pages(like intermediate state viewed by different users). All 
+Chrome does is separate multiple components (different tabs, plugins, etc) into separate processes. 
+
+But now days in HTML5 Web Workers provide a simple means for web content to run scripts in background threads. This is 
+real multi-threading situation. Non-blocking doesn't mean concurrency, Asynchronous events are processed after the current
+executing script has yielded. 
+
+
+## Web Workers API
+
+{% highlight javascript %}
+var worker = new Worker('task.js');
+{% endhighlight %}
+
+like other threading concept, Workers utilize thread-like message passing to achieve parallelism. 
+
+```postMessage()``` we can start a worker by calling this method. 
+
+{% highlight javascript %}
+var worker = new Worker('task.js');
+
+worker.addEventListener('message', function(e){
+    console.log('Worker said: ', e.data);
+}, false);
+
+worker.postMessage('hello world');
+{% endhighlight %}
