@@ -31,12 +31,73 @@ like other threading concept, Workers utilize thread-like message passing to ach
 
 ```postMessage()``` we can start a worker by calling this method. 
 
-{% highlight javascript %}
-var worker = new Worker('task.js');
+{% highlight html %}
+<button onclick="sayHI()">Say HI</button>
+<button onclick="unknownCmd()">Send unknown command</button>
+<button onclick="stop()">Stop worker</button>
+<output id="result"></output>
 
-worker.addEventListener('message', function(e){
-    console.log('Worker said: ', e.data);
-}, false);
+<script>
+  function sayHI() {
+    worker.postMessage({'cmd': 'start', 'msg': 'Hi'});
+  }
 
-worker.postMessage('hello world');
+  function stop() {
+    // worker.terminate() from this script would also stop the worker.
+    worker.postMessage({'cmd': 'stop', 'msg': 'Bye'});
+  }
+
+  function unknownCmd() {
+    worker.postMessage({'cmd': 'foobard', 'msg': '???'});
+  }
+
+  var worker = new Worker('task.js');
+
+  worker.addEventListener('message', function(e) {
+    document.getElementById('result').textContent = e.data;
+  }, false);
+</script>
 {% endhighlight %}
+
+and typical javascript code like this one: 
+
+{% highlight javascript %}
+self.addEventListener('message', function(e) {
+  var data = e.data;
+  switch (data.cmd) {
+    case 'start':
+      self.postMessage('WORKER STARTED: ' + data.msg);
+      break;
+    case 'stop':
+      self.postMessage('WORKER STOPPED: ' + data.msg +
+                       '. (buttons will no longer work)');
+      self.close(); // Terminates the worker.
+      break;
+    default:
+      self.postMessage('Unknown command: ' + data.msg);
+  };
+}, false);
+{% endhighlight %}
+
+## Transferrable objects
+
+One thing we must notice is that when passing these data using ```postMessage()```, a copy is made and pass to. Considering a 
+situation if you are passing 500 MB file, there 's a noticeable overhead in getting that file between the worker and the main 
+thread. 
+
+To reduce the latency due to "copy" transfer, web worker introduce <strong>Transferable Objects</strong>. 
+
+With transfterable objects, data is transferred from one context to another. the original objects from calling context is no longer 
+available once transfer to the new context. It zero-copy, which vastly improves the performance of sending data to a worker. 
+
+
+
+
+
+
+
+
+
+
+
+

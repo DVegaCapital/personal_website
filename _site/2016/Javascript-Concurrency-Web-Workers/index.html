@@ -153,13 +153,61 @@ executing script has yielded.</p>
 
 <p><code>postMessage()</code> we can start a worker by calling this method.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;task.js&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;sayHI()&quot;</span><span class="nt">&gt;</span>Say HI<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;unknownCmd()&quot;</span><span class="nt">&gt;</span>Send unknown command<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;stop()&quot;</span><span class="nt">&gt;</span>Stop worker<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;output</span> <span class="na">id=</span><span class="s">&quot;result&quot;</span><span class="nt">&gt;&lt;/output&gt;</span>
 
-<span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Worker said: &#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="kd">function</span> <span class="nx">sayHI</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;Hi&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
 
-<span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span></code></pre></div>
+  <span class="kd">function</span> <span class="nx">stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// worker.terminate() from this script would also stop the worker.</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;Bye&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">unknownCmd</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;foobard&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;???&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;task.js&#39;</span><span class="p">);</span>
+
+  <span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+  <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+<p>and typical javascript code like this one:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">cmd</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">&#39;start&#39;</span><span class="o">:</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;WORKER STARTED: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;stop&#39;</span><span class="o">:</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;WORKER STOPPED: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span> <span class="o">+</span>
+                       <span class="s1">&#39;. (buttons will no longer work)&#39;</span><span class="p">);</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span> <span class="c1">// Terminates the worker.</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;Unknown command: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span></code></pre></div>
+
+<h2 id="transferrable-objects">Transferrable objects</h2>
+
+<p>One thing we must notice is that when passing these data using <code>postMessage()</code>, a copy is made and pass to. Considering a 
+situation if you are passing 500 MB file, there ‘s a noticeable overhead in getting that file between the worker and the main 
+thread.</p>
+
+<p>To reduce the latency due to “copy” transfer, web worker introduce <strong>Transferable Objects</strong>.</p>
+
+<p>With transfterable objects, data is transferred from one context to another. the original objects from calling context is no longer 
+available once transfer to the new context. It zero-copy, which vastly improves the performance of sending data to a worker.</p>
+
 
   </section>
 </article>
